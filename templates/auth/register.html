@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  </head>
+  
+  <body class="bg-gradient-primary">
+
+    <div class="container">
+      {% include 'partials/messages.html' %}
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                     <img src="{% static 'img/logo.png' %}" class="col-lg-5 d-none d-lg-block bg-register-image pl-5 px-1">
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+                            <form class="user" method="POST">
+
+                              {% csrf_token %}
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" name="first_name" class="form-control form-control-user" required
+                                            placeholder="First Name">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="last_name" class="form-control form-control-user" required
+                                            placeholder="Last Name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                  <input type="text" name="username" class="form-control form-control-user" required
+                                      placeholder="Username">
+                               </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control form-control-user" required 
+                                        placeholder="Email Address">
+                                </div>
+
+                                <div class="form-group">
+                                    <div>
+                                        <input class="form-control form-control-user"
+                                            placeholder="Password" type="password" required name="password">
+                                    </div>
+                                 
+                                </div>
+                                <input type="submit" value="Register" class="btn btn-primary btn-user btn-block">
+                              
+                               
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="{% url 'reset-pass' %}">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="{% url 'login' %}">Already have an account? Login!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+
+{% extends 'table/tables.html' %}
+
+{% load static %}
+{% block content %}
+ <!-- Custom styles for this page -->
+ <link href="{% static 'css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Rooms Table</h6>
+
+            <a class="btn btn-outline-primary  float-right" href="{% url 'allocation_add' %}" >
+                Add
+                    <img href ="{% static 'img/add.svg' %}" >
+                
+            </a>
+        
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Resident Name</th>
+                        <th>Room Name</th>
+                        <th>Family Size</th>
+                        <th>Building</th>
+                        <th>Capacity</th>
+                        <th>Priority</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                      </tr>
+                </thead>
+                
+                <tbody>
+                    {% for allocation in allocations %}
+                    <tr>
+                      <td>{{ allocation.resident.name }}</td>
+                      <td>{{ allocation.room.name }}</td>
+                      <td>{{ allocation.resident.family_size }}</td>
+                      <td>{{ allocation.room.building }}</td>
+                      <td>{{ allocation.room.capacity }}</td>
+                        <td class="text-center">
+                            {% if allocation.room.priority == True %}
+                                <span class="badge badge-pill badge-success ">Yes</span>
+                            {% else %}
+                            <span class="badge badge-pill badge-secondary">No</span>
+                            {% endif %}
+                            </td>
+                        <td>
+                            {{allocation.date}}
+                        </td>
+                        
+                        <td class="text-center">
+                            <a class="btn btn-primary me-1" href="{% url 'allocation_edit' allocation.id %}">
+                                <img src="{% static 'img/edit.svg' %}" alt="">
+                            </a>
+                            <a class="btn btn-secondary" href="{% url 'allocation_delete' allocation.id %}">
+
+                                <img src="{% static 'img/del.svg' %}" alt="">
+                            </a>
+
+                            
+                          
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

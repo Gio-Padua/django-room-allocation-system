@@ -1,0 +1,74 @@
+
+{% extends 'table/tables.html' %}
+
+{% load static %}
+{% block content %}
+ <!-- Custom styles for this page -->
+ <link href="{% static 'css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Residents Table</h6>
+
+            <a class="btn btn-outline-primary float-right" href="{% url 'residents_add' %}" >
+                Add
+                    <img href ="{% static 'img/add.svg' %}" >
+                
+            </a>
+        
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Family Size</th>
+                        <th>Priority</th>
+                        <th>Assigned</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% for resident in residents %}
+                    <tr >
+                        <td>{{resident.name}}</td>
+                        <td>{{resident.address}}</td>
+                        <td>{{resident.family_size}}</td>
+                        <td class="text-center">
+                            {% if resident.priority == True %}
+                                <span class="badge badge-pill badge-success ">Yes</span>
+                            {% else %}
+                            <span class="badge badge-pill badge-secondary">No</span>
+                            {% endif %}
+                            </td>
+                        <td class="text-center">
+                            {% if resident.assigned == True %}
+                                <span class="badge badge-pill badge-success">Yes</span>
+                            {% else %}
+                            <span class="badge badge-pill badge-secondary">No</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-primary me-1" href="{% url 'residents_edit' resident.id %}" data-toggle="tooltip" data-placement="bottom" title="edit residents">
+                                <img src="{% static 'img/edit.svg' %}" alt="">
+                            </a>
+                            <a type="button" class="btn btn-secondary" href="{% url 'resident_delete' resident.id %}">
+                                <img src="{% static 'img/del.svg' %}" alt="">
+                            </a>
+
+                          
+                            
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

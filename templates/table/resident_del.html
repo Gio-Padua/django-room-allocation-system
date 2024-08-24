@@ -1,0 +1,16 @@
+{% extends 'table/tables.html' %}
+{% block content %}
+<div class="d-flex justify-content-center mt-5">  <div class="card bg-light shadow-sm" style="width: 18rem;">  <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Delete Resident</h6>
+    </div>
+    <div class="card-body">
+      <p>Are you sure you want to delete this Resident?</p>
+      <form action="{% url 'resident_delete' resident.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

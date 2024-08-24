@@ -1,0 +1,72 @@
+{% load static %}
+<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" >
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">RoomAlloc</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'home' %}">
+            <img src="{% static 'img/dash.svg' %}" >
+            <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+   
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Tables
+    </div>
+
+
+    <!-- Nav Item - Charts -->
+    
+
+    <!-- Nav Item - Tables -->
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'residents' %}">
+            <img src="{% static 'img/groupUser.svg' %}" >
+            <span>Residents</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'room_list' %}">
+            <img src="{% static 'img/bed.svg' %}" >
+            <span>Rooms</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'allocation_list' %}">
+            <img src="{% static 'img/table.svg' %}" >
+            <span>Allocation</span></a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+            <img src="{% static 'img/chart.svg' %}" >
+            <span>Charts</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block">
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle">
+           <img  src="{% static 'img/colapse.svg' %}" alt=""> 
+        </button>
+    </div>
+
+  
+
+</ul>
+<!-- End of Sidebar -->
