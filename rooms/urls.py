@@ -16,8 +16,11 @@ urlpatterns = [
 
     path('allocations/', views.allocationTable, name='allocation_list'),
     path('allocations/create/', views.allocation_add, name='allocation_add'),
-    path('allocations/update/<int:pk>/', views.allocation_edit, name='allocation_edit'),
-    path('allocations/delete/<int:pk>/', views.allocation_delete, name='allocation_delete'),
+    path('allocations/update/<int:id>/', views.allocation_edit, name='allocation_edit'),
+    path('allocations/delete/<int:id>/', views.allocation_delete, name='allocation_delete'),
+    path('allocations/allocate-all/', views.allocate_all, name='allocate_all'),
+
+    path('report/', views.RoomsReport.as_view(), name='room_report')
 
 
 

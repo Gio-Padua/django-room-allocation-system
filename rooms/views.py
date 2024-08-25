@@ -1,9 +1,12 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import  redirect, render
-from django.urls import reverse
 from .models import *
 from .forms import *
 from django.contrib import messages
+from slick_reporting.views import ReportView, Chart
+from slick_reporting.fields import ComputationField
+from django.db.models import Sum, Count
+
 # Create your views here.
 def TableView(request):
     return render(request, 'table/tables.html')
@@ -119,8 +122,8 @@ def allocation_add(request):
     context = {'form': form}
     return render(request, 'table/alloc_add.html', context)
 
-def allocation_edit(request, pk):
-    allocation = Allocation.objects.get(pk=pk)
+def allocation_edit(request, id):
+    allocation = Allocation.objects.get(pk=id)
     if request.method == 'POST':
         form = AllocationForm(request.POST, instance=allocation)
         if form.is_valid():
@@ -129,13 +132,73 @@ def allocation_edit(request, pk):
             return redirect('allocation_list')
     else:
         form = AllocationForm(instance=allocation)
-    context = {'form': form}
+    context = {'form': form, 'allocation': allocation}
     return render(request, 'table/alloc_edit.html', context)
 
-def allocation_delete(request, pk):
-    allocation = Allocation.objects.get(pk=pk)
+def allocation_delete(request, id):
+    allocation = Allocation.objects.get(pk=id)
     if request.method == 'POST':
         allocation.delete()
         messages.success(request, 'Allocation deleted successfully!')
         return redirect('allocation_list')
     return render(request, 'table/alloc_del.html', {'allocation': allocation})
+
+
+from .genetic_allocation import genetic_algorithm
+
+def allocate_all(request):
+    residentq = Resident.objects.all()
+    for resident in residentq:
+        resident.assigned = False
+        resident.save()
+    Allocation.objects.all().delete()
+
+    # Get rooms and residents
+    rooms = list(Room.objects.all())
+    residents = list(Resident.objects.all())
+
+    # Run the genetic algorithm
+    best_solution = genetic_algorithm(rooms, residents)  # Ignore distribution
+    print(f"Length of best_solution: {len(best_solution)}")
+    print(f"Length of rooms: {len(rooms)}")
+    # Update resident assignments and save
+    for resident, room_index in zip(residents, best_solution):
+        resident.assigned = True
+        resident.save()
+        allocation = Allocation(resident=resident, room=rooms[room_index])
+        allocation.save()
+    
+
+    messages.success(request, "Allocations updated successfully!")
+    return JsonResponse({'message': 'Allocations updated successfully!'})
+
+#reports
+
+class RoomsReport(ReportView):
+    report_model = Allocation
+    date_field = "date"
+    group_by = "resident"
+    columns = [
+        "name",
+        ComputationField.create(
+            Count, "resident.assigned", verbose_name="Room assigned", 
+        ),
+        ComputationField.create(
+            Sum, "resident.family_size", name="sum__value", verbose_name="Total Value sold $"
+        ),
+    ]
+
+    chart_settings = [
+        Chart(
+            "Total assigned $",
+            Chart.BAR,
+            data_source=["sum__value"],
+            title_source=["name"],
+        ),
+        Chart(
+            "Total assigned $ [PIE]",
+            Chart.PIE,
+            data_source=["sum__value"],
+            title_source=["name"],
+        ),
+    ]

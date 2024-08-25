@@ -7,13 +7,26 @@
  <link href="{% static 'css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Rooms Table</h6>
-
-            <a class="btn btn-outline-primary  float-right" href="{% url 'allocation_add' %}" >
-                Add
-                    <img href ="{% static 'img/add.svg' %}" >
-                
-            </a>
+        <div class="btn-toolbar justify-content-between">
+            <div class="btn-group">
+                <h6 class="m-0 font-weight-bold text-primary">Allocation Table</h6>
+            </div>
+           
+            <div class="btn-group">
+                <div class="btn-group ">
+                    <button type="button" class="btn btn-primary float-right" id="allocateButton">
+                        Allocate All Residents
+                    </button>
+                </div>
+                <a class="btn btn-outline-primary  " href="{% url 'allocation_add' %}" >
+                    Add
+                        <img href ="{% static 'img/add.svg' %}" >
+                    
+                </a>
+            </div>
+        </div>
+        
+        
         
     </div>
     <div class="card-body">
@@ -72,5 +85,18 @@
     </div>
 </div>
 
-
+<script>
+    document.getElementById("allocateButton").addEventListener("click", function() {
+        fetch('/allocations/allocate-all/')
+          .then(response => response.json())
+          .then(data => {
+            console.log(data.message); // Log the message to the console
+            alert(data.message); // Or directly display the message in an alert
+            location.reload();
+          })
+          .catch(error => {
+            console.error("Error:", error);
+          });
+      });
+</script>
 {% endblock %}

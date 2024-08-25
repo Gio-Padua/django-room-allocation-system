@@ -48,15 +48,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'import_export',
     'authentication',
     'rooms',
     'django_seed',
     'crispy_forms',
-    'crispy_bootstrap5',
+    'crispy_bootstrap4',
+    'slick_reporting',
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -190,4 +191,6 @@ UNFOLD = {
         },}
     
     }
+from import_export.formats.base_formats import CSV, XLSX
+IMPORT_FORMATS = [CSV, XLSX]
 

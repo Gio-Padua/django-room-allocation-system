@@ -1,0 +1,5 @@
+/* custom_admin.css */
+.jazzmin-site-logo {
+  width: 100px !important; /* Adjust the width as needed */
+  height: auto !important; /* Maintain aspect ratio */
+}
