@@ -24,9 +24,9 @@ class ResidentAdmin(ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     
     export_form_class = ExportForm
-    list_display = ('name', 'address', 'family_size', 'priority', 'assigned')
-    search_fields = ('name', 'address')  # Optional: Add fields for searching residents
-    list_filter = ('address', 'priority')
+    list_display = ('lname','fname', 'address', 'family_size', 'priority','priority_members', 'priority_category',  'assigned', 'date')
+    search_fields = ('lname','fname', 'address',)  # Optional: Add fields for searching residents
+    list_filter = ('address', 'priority', 'priority_members','lname','fname', 'address','assigned')
 admin.site.register(Resident, ResidentAdmin)
 
 class RoomAdmin(ModelAdmin, ImportExportModelAdmin):
@@ -41,7 +41,7 @@ class AllocationAdmin(ModelAdmin, ImportExportModelAdmin):
     import_form_class = ImportForm
     export_form_class = ExportForm
     list_display = ('resident',  'room', 'date')
-    search_fields = ('resident__name', 'room__name')  # Search by related model fields
+    search_fields = ('resident__lname','resident__fname', 'room__name')  # Search by related model fields
 
 admin.site.register(Room, RoomAdmin)
 admin.site.register(Allocation, AllocationAdmin)

@@ -4,18 +4,26 @@ from .models import *
 class ResidentsForm(forms.ModelForm):
     class Meta:
         model = Resident
-        fields = ['name', 'address', 'family_size', 'priority', 'assigned']
+        fields = ['lname','fname', 'address', 'street', 'family_size', 'priority_members', 'priority_category', 'priority', 'assigned']
         labels = {
-            'name': 'Name',
+            'lname': 'Last Name',
+            'fname': 'First Name',
             'address': 'Address',
             'family_size': 'Family Size',
+            'street': 'Street',
+            'priority_members': 'Number of Priority Members',
+            'priority_category': 'Category of Priority Members',
             'priority': 'Priority',  # Capitalize for better clarity
             'assigned': 'Assigned',
         }
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control-user'}),
+            'lname': forms.TextInput(attrs={'class': 'form-control-user'}),
+            'fname': forms.TextInput(attrs={'class': 'form-control-user'}),
             'address': forms.Select(choices=ZONE_CHOICES, attrs={'class': 'form-control'}),
-            'family_size': forms.NumberInput(attrs={'class': 'form-control-user'}),  # Use NumberInput for family size
+            'family_size': forms.NumberInput(attrs={'class': 'form-control-user'}), 
+            'street': forms.TextInput(attrs={'class': 'form-control-user'}), 
+            'priority_members': forms.NumberInput(attrs={'class': 'form-control-user'}),
+            'priority_category': forms.Select(choices=PRIORITY_CATEGORY, attrs={'class': 'form-control'}), 
             'priority': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # Use CheckboxInput for priority
             'assigned': forms.CheckboxInput(attrs={'class': 'form-check-input'}),  # Use CheckboxInput for assigned
         }
@@ -58,7 +66,7 @@ class AllocationForm(forms.ModelForm):
        'room' : 'Room'
     }
     widgets = {
-            'resident': forms.Select(choices=Resident.objects.all(), attrs={'class': 'form-control'}),
-            'room': forms.Select(choices=Room.objects.all(), attrs={'class': 'form-control'}),  
+              'resident': forms.Select(attrs={'class': 'form-control'}),
+            'room': forms.Select(attrs={'class': 'form-control'}),
 
         }

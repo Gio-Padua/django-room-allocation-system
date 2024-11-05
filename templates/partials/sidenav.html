@@ -4,10 +4,10 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-text">
+            <img src="{% static 'img/whitelogo.svg' %}" alt="">
         </div>
-        <div class="sidebar-brand-text mx-3">RoomAlloc</div>
+    
     </a>
 
     <!-- Divider -->
@@ -51,9 +51,9 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{% url 'report' %}">
             <img src="{% static 'img/chart.svg' %}" >
-            <span>Charts</span></a>
+            <span>Reports</span></a>
     </li>
 
     <!-- Divider -->
@@ -62,7 +62,10 @@
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle">
-           <img  src="{% static 'img/colapse.svg' %}" alt=""> 
+            <div style="padding-left: 1 rem;">
+                <img  src="{% static 'img/colapse.svg' %}" > 
+            </div>
+           
         </button>
     </div>
 

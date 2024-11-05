@@ -12,19 +12,39 @@ ZONE_CHOICES = [
     ('p8', 'Zone 8'),
 
 ]
+PRIORITY_CATEGORY =[
+     ('SC', 'Senior Citizen'),
+     ('PWD', 'Person with Disability'),
+     ('P', 'Pregnant'), 
+     ('SC & PWD', 'Senior Citizen and PWD'),
+     ('SC & P', 'Senior Citizen and Pregnant'),
+     ('PWD & P', 'PWD and Pregnant'),
+     ('ALL', 'Senior Citizen, PWD, and Pregnant'),
+     ('NONE', 'None'),
+]
 class Resident(models.Model):
-    name = models.CharField(max_length=75, default="Juan Luna")
+    fname = models.CharField(max_length=75, default="Add First Name")
+    lname = models.CharField(max_length=75, default="Add Last Name")
     address = models.CharField(max_length=55,
         choices=ZONE_CHOICES,
         default='Zone 1',)
+    street = models.CharField(max_length=75, default='Gil Malungkot Street',)
     family_size = models.PositiveIntegerField(default=1)
+
+    
+    priority_members = models.PositiveIntegerField(default=0)
+    priority_category = models.CharField(max_length=55,
+        choices=PRIORITY_CATEGORY,
+        default='NONE',)
     priority = models.BooleanField(default=False)
     assigned = models.BooleanField(default=False)
+    date = models.DateTimeField(default=timezone.now, editable=True)
+
     class Meta:
         verbose_name_plural = "Residents"
     def __str__(self):
 
-        return self.name 
+        return self.lname +', '+self.fname 
 
 class Room(models.Model):
     name = models.CharField(max_length=75, default="Room 101")
@@ -53,6 +73,6 @@ class Allocation(models.Model):
     
     def __str__(self):
 
-            return self.room.name +"  "+ self.resident.name
+        return self.room.name +"  "+ self.resident.lname+ " " + self.resident.fname
     
 

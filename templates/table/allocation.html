@@ -6,6 +6,7 @@
  <!-- Custom styles for this page -->
  <link href="{% static 'css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
 <div class="card shadow mb-4">
+    {% include 'partials/messages.html' %}
     <div class="card-header py-3">
         <div class="btn-toolbar justify-content-between">
             <div class="btn-group">
@@ -34,12 +35,14 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Resident Name</th>
+                        <th>Resident Last Name</th>
+                        <th>Resident First Name</th>
                         <th>Room Name</th>
                         <th>Family Size</th>
                         <th>Building</th>
                         <th>Capacity</th>
-                        <th>Priority</th>
+                        <th>Resident Priority Status</th>
+                        <th>Room Priority Status</th>
                         <th>Date</th>
                         <th>Actions</th>
                       </tr>
@@ -48,11 +51,21 @@
                 <tbody>
                     {% for allocation in allocations %}
                     <tr>
-                      <td>{{ allocation.resident.name }}</td>
+                      <td>{{ allocation.resident.lname }}</td>
+                      <td>{{ allocation.resident.fname }}</td>
                       <td>{{ allocation.room.name }}</td>
-                      <td>{{ allocation.resident.family_size }}</td>
+                      <td class="text-center">{{ allocation.resident.family_size }}</td>
                       <td>{{ allocation.room.building }}</td>
-                      <td>{{ allocation.room.capacity }}</td>
+                      <td class="text-center">{{ allocation.room.capacity }}</td>
+                      <td class="text-center">
+                        {% if allocation.resident.priority == True %}
+                            <span class="badge badge-pill badge-success ">Yes</span>
+                        {% else %}
+                        <span class="badge badge-pill badge-secondary">No</span>
+                        {% endif %}
+                        </td>
+                        
+
                         <td class="text-center">
                             {% if allocation.room.priority == True %}
                                 <span class="badge badge-pill badge-success ">Yes</span>
@@ -99,4 +112,22 @@
           });
       });
 </script>
+<script>
+    setTimeout(function(){
+      if ($('#msg').length > 0) {
+        $('#msg').remove();
+      }
+    }, 2000)
+  </script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+        
+<script src="{% static 'js/table/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.js.map' %}"></script>
+<script src="{% static 'js/datatables.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/table/dataTables.bootstrap4.min.js' %}"></script>
+
+
+<script src="{% static 'js/table/datatables-demo.js' %}"></script>
 {% endblock %}

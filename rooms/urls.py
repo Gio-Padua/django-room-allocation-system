@@ -3,7 +3,8 @@ from . import views
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path('table', views.TableView, name='table'),
+    path('', views.index, name = 'home'),
+
     path('residents', views.ResidentTable, name='residents'),
     path('residents/add', views.addResidents, name='residents_add'),
     path('residents/edit/<int:id>', views.editResidents, name='residents_edit'),
@@ -20,7 +21,7 @@ urlpatterns = [
     path('allocations/delete/<int:id>/', views.allocation_delete, name='allocation_delete'),
     path('allocations/allocate-all/', views.allocate_all, name='allocate_all'),
 
-    path('report/', views.RoomsReport.as_view(), name='room_report')
+    path('report/', views.ResidentReport.as_view(), name='report')
 
 
 

@@ -1,6 +1,9 @@
+{% load static %}
+<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
 {% if messages %}
     {% for message in messages %}
-        <center><div class="alert {{mesage.tag}} m-2">{{message}}</div></center>
+        <center><div class="alert {{ message.tags }} " id="msg" role="alert">{{message}}</div></center>
     
     {% endfor %}
 {% endif %}

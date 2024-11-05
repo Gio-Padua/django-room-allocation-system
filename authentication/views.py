@@ -5,9 +5,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import *
 
-@login_required(redirect_field_name='next', login_url='/login/')
-def Home(request):
-    return render(request, 'index.html')
 
 def RegisterView(request):
 
@@ -28,7 +25,7 @@ def RegisterView(request):
             user_data_has_error = True
             messages.error(request, "Email already exists")
 
-        if len(password) < 5:
+        if len(password) < 8:
             user_data_has_error = True
             messages.error(request, "Password must be at least 5 characters")
 
@@ -58,7 +55,7 @@ def LoginView(request):
         if user is not None:
             login(request, user)
 
-            return redirect('index')
+            return redirect('home')
         
         else:
             messages.error(request, "Invalid login credentials")

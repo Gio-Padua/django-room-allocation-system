@@ -158,6 +158,7 @@ EMAIL_USE_SSL=True
 EMAIL_HOST_USER="giopadua9803@gmail.com"
 EMAIL_HOST_PASSWORD="froa ogys ccmk jnud"
 
+from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',

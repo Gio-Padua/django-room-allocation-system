@@ -4,8 +4,10 @@
 {% load static %}
 {% block content %}
  <!-- Custom styles for this page -->
+ <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
  <link href="{% static 'css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
 <div class="card shadow mb-4">
+    {% include 'partials/messages.html' %}
     <div class="card-header py-3">
         <div class="btn-toolbar justify-content-between">
             <div class="btn-group">
@@ -26,11 +28,16 @@
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Name</th>
+                <thead class="text-center">
+                    <tr class="text-center">
+                        <th>Last Name</th>
+                        <th>First Name</th>
                         <th>Address</th>
-                        <th>Family Size</th>
+                        <th>Street</th>
+                        <th class="text-center" >Family Size</th>
+                        
+                        <th class="text-center">Priority Members</th>
+                        <th class="text-center">Priority Category</th>
                         <th>Priority</th>
                         <th>Assigned</th>
                         <th>Actions</th>
@@ -39,10 +46,14 @@
                 
                 <tbody>
                     {% for resident in residents %}
-                    <tr >
-                        <td>{{resident.name}}</td>
+                    <tr class=>
+                        <td>{{resident.lname}}</td>
+                        <td>{{resident.fname}}</td>
                         <td>{{resident.address}}</td>
-                        <td>{{resident.family_size}}</td>
+                        <td>{{resident.street}}</td>
+                        <td class="text-center">{{resident.family_size}}</td>
+                        <td class="text-center">{{resident.priority_members}}</td>
+                        <td>{{resident.get_priority_category_display }}</td>
                         <td class="text-center">
                             {% if resident.priority == True %}
                                 <span class="badge badge-pill badge-success ">Yes</span>
@@ -58,13 +69,18 @@
                             {% endif %}
                         </td>
                         <td class="text-center">
-                            <a class="btn btn-primary me-1" href="{% url 'residents_edit' resident.id %}" data-toggle="tooltip" data-placement="bottom" title="edit residents@">
-                                <img src="{% static 'img/edit.svg' %}" alt="">
-                            </a>
-                            <a type="button" class="btn btn-secondary" href="{% url 'resident_delete' resident.id %}">
-                                <img src="{% static 'img/del.svg' %}" alt="">
-                            </a>
-
+                             <div class="btn-toolbar  justify-content-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-primary me-1" href="{% url 'residents_edit' resident.id %}" data-toggle="tooltip" data-placement="bottom" title="edit residents@">
+                                        <img src="{% static 'img/edit.svg' %}" alt="">
+                                    </a>
+                                </div>
+                                <div class="btn-group">
+                                    <a type="button" class="btn btn-secondary" href="{% url 'resident_delete' resident.id %}">
+                                        <img src="{% static 'img/del.svg' %}" alt="">
+                                    </a>
+                                </div>
+                        </div>
                           
                             
                         </td>
@@ -76,6 +92,22 @@
         </div>
     </div>
 </div>
+<script>
+    setTimeout(function(){
+      if ($('#msg').length > 0) {
+        $('#msg').remove();
+      }
+    }, 2000)
+  </script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
+        
+<script src="{% static 'js/table/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.js.map' %}"></script>
+<script src="{% static 'js/datatables.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/table/dataTables.bootstrap4.min.js' %}"></script>
 
 
+<script src="{% static 'js/table/datatables-demo.js' %}"></script>
 {% endblock %}
