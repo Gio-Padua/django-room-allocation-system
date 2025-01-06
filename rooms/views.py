@@ -44,7 +44,7 @@ def addResidents(request):
             nfname = form.cleaned_data['fname']
             naddress = form.cleaned_data['address']
             nfamily  = form.cleaned_data['family_size']
-           
+            nstreet = form.cleaned_data['street']
             numpriority = form.cleaned_data['priority_members']
             catpriority = form.cleaned_data['priority_category']
             npriority = form.cleaned_data['priority']
@@ -55,6 +55,7 @@ def addResidents(request):
                 fname = nfname,
                 address = naddress,
                 family_size  = nfamily,
+                street = nstreet,
                 priority_members = numpriority,
                 priority_category = catpriority,
                 priority = npriority,
@@ -152,9 +153,9 @@ def allocation_add(request):
     if request.method == 'POST':
         form = AllocationForm(request.POST)
         if form.is_valid():
-           form.save()
-           messages.success(request, 'Allocation added successfully!')
-           return render('allocation_list', {'success' : True})
+            form.save()
+            messages.success(request, 'Allocation added successfully!')
+            return redirect('allocation_list')  # Use the name of the URL pattern for the list view
     else:
         form = AllocationForm()
     context = {'form': form}
